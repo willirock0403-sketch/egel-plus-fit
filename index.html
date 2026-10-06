@@ -373,6 +373,17 @@ body{
 .dcard figcaption .k{display:block;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--rojo);margin-bottom:4px}
 .dcard figcaption b{display:block;font-size:18px;color:var(--gris);margin-bottom:4px}
 
+/* carreras exactas */
+.cars{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.car{background:#fff;border:1px solid var(--gris-claro);border-top:10px solid var(--rojo);border-radius:8px;box-shadow:0 22px 50px rgba(0,0,0,.12);padding:40px 30px;text-align:center;min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+.car .code{display:inline-block;background:var(--gris);color:#fff;font-size:44px;font-weight:800;letter-spacing:.08em;padding:10px 26px;border-radius:6px}
+.car b{font-size:27px;font-weight:800;color:var(--gris);line-height:1.3;letter-spacing:.01em}
+.carlist{display:grid;gap:12px;max-width:820px;margin:0 auto}
+.carrow{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid #E3E3E6;border-left:8px solid var(--rojo);border-radius:8px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.05);text-align:left}
+.carrow .code{flex:none;min-width:64px;text-align:center;background:var(--gris);color:#fff;font-weight:800;letter-spacing:.06em;padding:8px 10px;border-radius:5px;font-size:16px}
+.carrow .name{font-size:17px;font-weight:700;color:var(--gris);letter-spacing:.01em;font-family:inherit}
+@media(max-width:600px){.carrow{padding:12px 14px}.carrow .name{font-size:14.5px}}
+
 /* pilas de capturas */
 .stack{position:relative;width:1040px;height:600px}
 .stack .frame{position:absolute}
@@ -584,7 +595,7 @@ body.intro-on{overflow:hidden}
   </video>
   <button class="bigplay" id="bigplay" aria-label="Reproducir video"></button>
 </div>
-<p class="vmeta">Duración 4:14 · Con voz y subtítulos</p>
+<p class="vmeta">Duración 4:07 · Con voz y subtítulos</p>
 
 <section class="sec" id="enlaces">
   <h2>Enlaces para su registro</h2>
@@ -608,6 +619,16 @@ body.intro-on{overflow:hidden}
       <p>Solo cuando le avisemos que su pre-registro está listo.</p>
       <a class="go" href="https://registroenlinea.ceneval.edu.mx/RegistroLinea/indexCerrado.php#institucion" target="_blank" rel="noopener">Ir al registro en línea →</a>
     </div>
+  </div>
+</section>
+
+<section class="sec" id="carreras">
+  <h2>Programa/Carrera en el registro de CENEVAL</h2>
+  <p class="sub">En el Paso 6, elija la opción de su carrera <b>escrita exactamente así</b>.</p>
+  <div class="carlist">
+    <div class="carrow"><span class="code">IC</span><span class="name">IC - INGENIERO CIVIL</span></div>
+    <div class="carrow"><span class="code">ISC</span><span class="name">ISC - INGENIERO EN SISTEMAS COMPUTACIONALES</span></div>
+    <div class="carrow"><span class="code">IIS</span><span class="name">IIS - INGENIERO INDUSTRIAL Y DE SISTEMAS</span></div>
   </div>
 </section>
 
@@ -686,7 +707,7 @@ body.intro-on{overflow:hidden}
     <li><b>Pago.</b> Con su ficha, pague en un banco o tienda de los que aparecen en ella (como OXXO) y conserve su comprobante.</li>
     <li><b>Envíe su comprobante.</b> Coloque el comprobante en la esquina superior izquierda de su ficha y envíe ambos escaneados en un solo PDF (no PNG ni JPG) a cenevalfit@uat.edu.mx.</li>
     <li><b>Pre-registro.</b> CENEVAL-FIT hace su pre-registro y le avisa por correo.</li>
-    <li><b>Registro en línea.</b> Institución: UAT · matrícula solo con números · su carrera · Campus: UAT – Facultad de Ingeniería Tampico · Aceptar. Luego Editar registro y verifique sus datos (única oportunidad).</li>
+    <li><b>Registro en línea.</b> Institución: UAT · matrícula solo con números · su carrera con el nombre exacto (IC - INGENIERO CIVIL, ISC - INGENIERO EN SISTEMAS COMPUTACIONALES o IIS - INGENIERO INDUSTRIAL Y DE SISTEMAS) · Campus: UAT – Facultad de Ingeniería Tampico · Aceptar. Luego Editar registro y verifique sus datos (única oportunidad).</li>
     <li><b>Apartados y encuestas.</b> Llene cada apartado y conteste todas las encuestas. CCT: 28MSU0010B.</li>
     <li><b>Pase de Ingreso.</b> Al completar todo, genérelo desde la parte inferior de la página.</li>
     <li><b>Guárdelo e imprímalo.</b> Guárdelo en PDF e imprímalo: es requisito indispensable.</li>
