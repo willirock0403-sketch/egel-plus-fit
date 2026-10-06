@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Registro al EGEL Plus — esta guía cambió de dirección</title>
+<script>
+// Lleva cualquier enlace viejo (video, PDF, imagen) a la misma ruta dentro de la guía nueva.
+(function(){
+  var base = "/egel-plus-fit/".toLowerCase(), p = location.pathname, i = p.toLowerCase().indexOf(base);
+  var resto = i >= 0 ? p.slice(i + base.length) : "";
+  
+  location.replace("https://examenes-estandarizados.github.io/egel/" + resto + location.search + location.hash);
+})();
+</script>
+</head>
+<body><p><a href="https://examenes-estandarizados.github.io/egel/">https://examenes-estandarizados.github.io/egel/</a></p></body>
+</html>

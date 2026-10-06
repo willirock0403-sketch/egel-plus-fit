@@ -1,5 +1,8 @@
-# Registro al EGEL Plus — Facultad de Ingeniería Tampico
+# Registro al EGEL Plus — se mudó
 
-Guía en video para egresados. Coordinación de Exámenes Estandarizados, UAT.
+Esta guía ahora forma parte del sitio de la Coordinación de Exámenes Estandarizados:
 
-https://willirock0403-sketch.github.io/egel-plus-fit/
+**https://examenes-estandarizados.github.io/egel/**
+
+Código y contenido: [examenes-estandarizados/examenes-estandarizados.github.io](https://github.com/examenes-estandarizados/examenes-estandarizados.github.io).
+Este repositorio solo redirige los enlaces viejos.
