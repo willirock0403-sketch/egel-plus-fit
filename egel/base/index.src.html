@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>Registro en línea al EXANI-II — Facultad de Ingeniería Tampico, UAT</title>
+<meta name="description" content="Video tutorial paso a paso para el registro en línea al EXANI-II de CENEVAL. Coordinación de Exámenes Estandarizados, Facultad de Ingeniería Tampico, UAT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rojo:#ED1C24;
+  --rojo-hondo:#C2151C;
+  --gris:#3A3A3A;
+  --gris-med:#58585B;
+  --gris-claro:#E6E6E8;
+  --rosa:#FCE9EA;
+  --texto:#222222;
+  --naranja:#EF611E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{color-scheme:light only;background:#F4F4F6}
+body{background:#F4F4F6}
+html,body{height:100%}
+body{
+  background:#F4F4F6;
+  font-family:"Montserrat","Segoe UI",system-ui,sans-serif;
+  color:var(--texto);
+}
+
+/* ---------- encuadre ---------- */
+#viewport{position:relative;width:100%;overflow:hidden;background:#111}
+#stage{
+  width:1920px;height:1080px;position:absolute;left:0;top:0;overflow:hidden;
+  background:#fff;transform-origin:top left;
+}
+#stage.paused *, #stage.paused{animation-play-state:paused !important}
+#player{text-align:left}
+
+/* ---------- geometría institucional ---------- */
+.geo{position:absolute;inset:0;overflow:hidden;pointer-events:none;transition:opacity .45s ease}
+.geo>span{position:absolute;display:block}
+.rail{left:0;top:0;width:16px;height:100%;background:var(--rojo)}
+.rail-notch{left:16px;top:430px;width:34px;height:210px;background:var(--gris-med);clip-path:polygon(0 0,100% 0,0 100%)}
+
+.geo-cover .lg{left:0;top:0;width:73%;height:270px;background:var(--gris-claro);clip-path:polygon(0 0,100% 0,100% 46%,0 100%)}
+.geo-cover .band{right:0;top:-40px;width:560px;height:390px;background:var(--gris-med);clip-path:polygon(56% 0,100% 0,44% 100%,0 100%)}
+.geo-cover .red{right:0;top:0;width:430px;height:340px;background:var(--rojo);clip-path:polygon(28% 0,100% 0,100% 100%)}
+.geo-cover .bred{left:0;bottom:0;width:100%;height:150px;background:var(--rojo);clip-path:polygon(0 58%,100% 8%,100% 100%,0 100%)}
+.geo-cover .bgray{left:0;bottom:0;width:100%;height:112px;background:var(--gris-med);clip-path:polygon(0 100%,100% 22%,100% 100%)}
+
+.geo-slim .bred{left:0;bottom:0;width:100%;height:64px;background:var(--rojo);clip-path:polygon(0 66%,100% 22%,100% 100%,0 100%)}
+.geo-slim .bgray{left:0;bottom:0;width:100%;height:46px;background:var(--gris-med);clip-path:polygon(0 100%,100% 30%,100% 100%)}
+
+.geo-cover{opacity:0}
+#stage.cover-mode .geo-cover{opacity:1}
+#stage.cover-mode .geo-slim{opacity:0}
+
+/* ---------- encabezado y pie fijos ---------- */
+#hdr{
+  position:absolute;left:16px;right:0;top:0;height:132px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 84px 0 80px;background:#fff;border-bottom:1px solid var(--gris-claro);
+  transition:opacity .4s ease;z-index:4;
+}
+#hdr img{display:block}
+#hdr .l-uat{height:52px}
+#hdr .l-fit{height:56px}
+#hdr .mid{font-size:17px;font-weight:700;letter-spacing:.14em;color:var(--gris-med);text-transform:uppercase}
+#hdr .mid b{color:var(--rojo);font-weight:800}
+#ftr{
+  position:absolute;left:16px;right:0;bottom:0;height:88px;
+  display:flex;align-items:flex-start;justify-content:center;padding-top:14px;
+  font-size:19px;font-weight:500;color:var(--gris-med);letter-spacing:.01em;
+  transition:opacity .4s ease;z-index:4;
+}
+#stage.cover-mode #hdr,#stage.cover-mode #ftr{opacity:0}
+
+/* ---------- escenas ---------- */
+.scene{position:absolute;inset:0;opacity:0;visibility:hidden;z-index:2}
+.scene.active{opacity:1;visibility:visible;transition:opacity .4s ease}
+.pane{position:absolute;left:96px;right:84px;top:160px;bottom:150px}
+
+/* portada / cierre */
+.cov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:3;padding-bottom:40px}
+.lockup{width:660px;margin-bottom:46px}
+.kicker{font-size:22px;font-weight:700;letter-spacing:.22em;color:var(--gris-med);text-transform:uppercase;margin-bottom:22px}
+.kicker b{color:var(--rojo);font-weight:800}
+.title-band{background:var(--rojo);padding:28px 76px;margin-bottom:32px}
+.title-band h1{
+  color:#fff;font-size:68px;font-weight:800;line-height:1.1;
+  letter-spacing:.015em;text-transform:uppercase;
+}
+.title-band h1 small{display:block;font-size:40px;font-weight:700;letter-spacing:.04em;margin-top:8px}
+.cov .sub{font-size:30px;font-weight:500;color:var(--gris);margin-bottom:8px}
+.cov .sub.strong{color:var(--rojo);font-weight:700}
+.cov .dept{
+  margin-top:30px;display:inline-flex;align-items:center;gap:18px;
+  font-size:22px;font-weight:600;color:var(--gris);letter-spacing:.02em;
+  border-top:2px solid var(--gris-claro);padding-top:22px;
+}
+.cov .dept span{color:var(--gris-med);font-weight:500}
+.cov .cierre{font-size:56px;font-weight:800;color:#fff;line-height:1.18;text-transform:none}
+.contact{
+  margin-top:26px;display:flex;align-items:stretch;background:#fff;
+  border:1px solid var(--gris-claro);box-shadow:0 18px 44px rgba(0,0,0,.10);text-align:left;
+}
+.contact .ic{width:12px;background:var(--rojo)}
+.contact div{padding:20px 34px}
+.contact p{font-size:18px;font-weight:700;letter-spacing:.12em;color:var(--gris-med);text-transform:uppercase;margin-bottom:6px}
+.contact h3{font-size:28px;font-weight:700;color:var(--gris)}
+.contact h3 span{color:var(--rojo);font-weight:600}
+
+/* rótulo de paso */
+.step{display:flex;align-items:stretch;margin-bottom:44px}
+.step .tag{
+  background:var(--rojo);color:#fff;font-size:26px;font-weight:800;letter-spacing:.06em;
+  display:flex;align-items:center;padding:0 34px;white-space:nowrap;
+}
+.step h2{
+  background:var(--rosa);color:var(--gris);font-size:38px;font-weight:700;
+  display:flex;align-items:center;padding:20px 40px;flex:1;letter-spacing:-.01em;
+}
+.step .of{background:var(--gris);color:#fff;font-size:20px;font-weight:700;display:flex;align-items:center;padding:0 26px;letter-spacing:.08em}
+
+/* columnas */
+.cols{display:grid;gap:70px;align-items:center;height:600px}
+.cols>*{min-width:0}
+.cols.shot{grid-template-columns:1fr 1040px}
+
+.list{list-style:none}
+.list li{
+  position:relative;padding-left:44px;font-size:27px;line-height:1.42;
+  color:var(--texto);font-weight:500;margin-bottom:28px;
+}
+.list li:last-child{margin-bottom:0}
+.list li::before{
+  content:"";position:absolute;left:0;top:12px;width:16px;height:16px;background:var(--rojo);
+}
+.list li b{font-weight:700;color:var(--gris)}
+.list li em{font-style:normal;font-weight:700;color:var(--rojo)}
+.list.num{counter-reset:n}
+.list.num li{padding-left:62px}
+.list.num li::before{
+  counter-increment:n;content:counter(n);top:2px;width:40px;height:40px;
+  color:#fff;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;
+}
+
+/* marcos de imagen */
+.frame{
+  background:#fff;border:1px solid var(--gris-claro);border-radius:6px;overflow:hidden;
+  box-shadow:0 26px 64px rgba(0,0,0,.20);position:relative;
+}
+.frame img{display:block;width:100%;height:auto;will-change:transform}
+.frame.fill img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.kb{transform-origin:var(--kbx,50%) var(--kby,50%)}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(var(--kbz,1.3))}}
+.shotw{width:1040px;height:590px}
+
+/* recuadro de nota / advertencia */
+.warn{
+  background:var(--rosa);border-left:11px solid var(--rojo);padding:24px 32px;
+  display:flex;gap:22px;align-items:center;box-shadow:0 14px 36px rgba(0,0,0,.10);
+}
+.warn .ic{
+  width:46px;height:46px;flex:none;background:var(--rojo);color:#fff;font-size:30px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;border-radius:50%;
+}
+.warn p{font-size:23px;font-weight:600;color:var(--gris);line-height:1.4}
+.warn.float{position:absolute;left:96px;right:84px;bottom:150px}
+.chip{
+  display:inline-flex;align-items:center;gap:16px;background:var(--gris);color:#fff;
+  padding:14px 26px;font-size:24px;font-weight:600;border-radius:4px;margin-bottom:34px;
+}
+.chip .dot{width:11px;height:11px;background:var(--rojo);border-radius:50%}
+
+/* paso 1: formulario ilustrado */
+.form{
+  width:1040px;background:#fff;border:1px solid var(--gris-claro);border-radius:6px;
+  box-shadow:0 26px 64px rgba(0,0,0,.18);overflow:hidden;
+}
+.form .fh{background:var(--gris);color:#fff;padding:22px 36px;display:flex;justify-content:space-between;align-items:center}
+.form .fh b{font-size:24px;font-weight:700}
+.form .fh span{font-size:17px;font-weight:600;letter-spacing:.12em;color:#cfcfd4;text-transform:uppercase}
+.form .fb{padding:30px 36px 32px;display:grid;gap:22px}
+.fld label{display:block;font-size:17px;font-weight:700;letter-spacing:.08em;color:var(--gris-med);text-transform:uppercase;margin-bottom:10px}
+.fld .in{border:2px solid var(--gris-claro);border-radius:5px;padding:14px 20px;font-size:23px;font-weight:600;color:var(--gris);background:#fff}
+.opts{border:2px solid var(--gris-claro);border-radius:5px;overflow:hidden}
+.opts div{padding:13px 20px;font-size:22px;font-weight:600;color:var(--gris);display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--gris-claro)}
+.opts div:last-child{border-bottom:0}
+.opts div i{width:20px;height:20px;border-radius:50%;border:2px solid var(--gris-med);flex:none}
+.opts div.hl{background:var(--rosa)}
+.opts div.hl i{border-color:var(--rojo);background:radial-gradient(var(--rojo) 45%,transparent 50%)}
+.opts div small{margin-left:auto;font-size:16px;font-weight:700;letter-spacing:.08em;color:var(--rojo);text-transform:uppercase}
+.fld .in.ph{color:var(--gris-med);font-weight:500;font-style:italic}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.frow{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.chk{display:flex;align-items:center;gap:14px;font-size:22px;font-weight:600;color:var(--gris)}
+.chk i{width:30px;height:30px;border:2px solid var(--gris-med);border-radius:4px;position:relative;flex:none}
+.chk i::after{content:"";position:absolute;left:9px;top:3px;width:8px;height:15px;border:solid #fff;border-width:0 4px 4px 0;transform:rotate(45deg);opacity:0}
+.scene.active .chk i{animation:tick .35s ease var(--d,0s) both}
+.scene.active .chk i::after{animation:tickmark .35s ease var(--d,0s) both}
+@keyframes tick{to{background:var(--rojo);border-color:var(--rojo)}}
+@keyframes tickmark{to{opacity:1}}
+.btn{background:var(--rojo);color:#fff;font-size:22px;font-weight:700;padding:14px 42px;border-radius:5px;letter-spacing:.03em}
+.scene.active .btn.pulse{animation:pulse 1.4s ease var(--d,0s) 2 both}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(237,28,36,.45)}50%{box-shadow:0 0 0 16px rgba(237,28,36,0)}}
+
+/* resaltador sobre capturas */
+.hl-box{position:absolute;border:5px solid var(--rojo);border-radius:8px;box-shadow:0 0 0 9999px rgba(20,20,22,.28);opacity:0;pointer-events:none}
+.scene.active .hl-box{animation:hlin .6s ease var(--d,0s) both}
+@keyframes hlin{from{opacity:0;transform:scale(1.08)}to{opacity:1;transform:none}}
+
+/* resaltador que recorre los campos del paso 1 */
+.hl-move{position:absolute;left:414px;top:122px;width:394px;height:36px;border:5px solid var(--rojo);border-radius:7px;
+  box-shadow:0 0 0 9999px rgba(20,20,22,.22);opacity:0;pointer-events:none}
+.scene.active .hl-move{animation:hlmove 23.5s ease-in-out 3.5s both}
+@keyframes hlmove{
+  0%{opacity:0;top:122px;left:414px;width:394px;height:36px}
+  2.5%,23.9%{opacity:1;top:122px;left:414px;width:394px;height:36px}
+  26%,52.8%{opacity:1;top:157px;left:414px;width:394px;height:36px}
+  54.9%,61.3%{opacity:1;top:193px;left:414px;width:394px;height:36px}
+  63.4%,73.2%{opacity:1;top:228px;left:414px;width:394px;height:36px}
+  75.3%,100%{opacity:1;top:262px;left:514px;width:192px;height:38px}
+}
+
+/* pilas de capturas */
+.stack{position:relative;width:1040px;height:600px}
+.stack .frame{position:absolute}
+
+/* ---------- animaciones de entrada ---------- */
+.scene .a-rise,.scene .a-pop,.scene .a-wipe,.scene .kb{animation:none}
+.scene.active .a-rise{animation:rise .8s cubic-bezier(.2,.8,.25,1) var(--d,0s) both}
+.scene.active .a-pop{animation:pop .85s cubic-bezier(.2,.9,.3,1) var(--d,0s) both}
+.scene.active .a-wipe{animation:wipeclip .9s cubic-bezier(.76,0,.24,1) var(--d,0s) both}
+.scene.active .kb{animation:kb var(--kbt,var(--dur,16s)) ease-in-out var(--kbd,0s) both}
+@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(20px)}to{opacity:1;transform:none}}
+@keyframes wipeclip{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+
+/* ---------- barrido de transición ---------- */
+#wipe{position:absolute;top:-12%;bottom:-12%;left:0;width:150%;background:var(--rojo);transform:translateX(-160%) skewX(-11deg);opacity:0;z-index:6;pointer-events:none}
+#wipe.go{animation:sweep .78s cubic-bezier(.75,0,.25,1) both}
+@keyframes sweep{0%{opacity:1;transform:translateX(-160%) skewX(-11deg)}100%{opacity:1;transform:translateX(160%) skewX(-11deg)}}
+
+/* ---------- subtítulos ---------- */
+#cc{
+  position:absolute;left:230px;width:1460px;bottom:40px;z-index:5;
+  background:rgba(34,34,34,.93);border-left:7px solid var(--rojo);
+  color:#fff;font-size:25px;font-weight:500;line-height:1.4;padding:14px 30px;
+  text-align:center;transition:opacity .25s ease;
+}
+#cc:empty{opacity:0}
+#stage:not(.nocc) #ftr{opacity:0}
+#stage.nocc #cc{opacity:0;visibility:hidden}
+
+/* ---------- controles (fuera del cuadro) ---------- */
+#bar{
+  display:flex;align-items:center;gap:10px;background:#17171A;
+  border-radius:0 0 10px 10px;padding:13px 18px;flex-wrap:wrap;
+  font-family:inherit;transition:opacity .35s ease;
+}
+#player:fullscreen{background:#000;display:flex;align-items:center;justify-content:center}
+#player:fullscreen #bar{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:50;
+  border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(22,22,24,.94);
+}
+#player:fullscreen #bar.hide{opacity:0;pointer-events:none}
+#bar button{
+  background:rgba(255,255,255,.08);color:#f2f2f4;border:0;border-radius:8px;
+  font-family:inherit;font-size:14px;font-weight:600;padding:9px 14px;cursor:pointer;
+  transition:background .15s ease;
+}
+#bar button:hover{background:rgba(255,255,255,.18)}
+#bar button:focus-visible{outline:2px solid var(--rojo);outline-offset:2px}
+#bar button.on{background:var(--rojo);color:#fff}
+#bar .sep{width:1px;height:22px;background:rgba(255,255,255,.14);margin:0 4px}
+#prog{width:300px;height:6px;background:rgba(255,255,255,.14);border-radius:3px;overflow:hidden;cursor:pointer;flex:1;min-width:160px}
+#progf{height:100%;width:0;background:var(--rojo)}
+#time{color:#9b9ba1;font-size:13px;font-weight:600;min-width:84px;text-align:center;font-variant-numeric:tabular-nums}
+
+/* ---------- página ---------- */
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.sitehead{background:#fff;border-bottom:4px solid var(--rojo);padding:24px 0}
+.page{background:#F4F4F6;padding:1px 0 60px;text-align:center}
+.sitehead .wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
+.sitehead img{height:46px;display:block;max-width:100%}
+.sitehead .t{font-size:17px;font-weight:700;color:var(--gris);line-height:1.35;text-align:center}
+.sitehead .t span{display:block;font-weight:500;color:var(--gris-med);font-size:14px}
+.hero{max-width:1280px;margin:38px auto 0;padding:0 24px;text-align:center}
+.hero .k{font-size:13px;font-weight:700;letter-spacing:.16em;color:var(--rojo);text-transform:uppercase;margin-bottom:8px}
+.hero h1{font-size:40px;font-weight:800;color:var(--gris);line-height:1.15;letter-spacing:.03em}
+.hero p{font-size:17px;color:var(--gris-med);margin:12px auto 0;line-height:1.55;max-width:760px}
+#player{margin:26px auto 0;max-width:1280px;border-radius:10px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.18)}
+.sec{max-width:1280px;margin:52px auto 0;padding:0 24px;text-align:center}
+.sec h2{font-size:26px;font-weight:800;color:var(--gris);margin-bottom:8px}
+.sec .sub{font-size:16px;color:var(--gris-med);margin-bottom:24px}
+
+.cta{
+  display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;
+  background:#fff;border:1px solid #E3E3E6;border-top:6px solid var(--rojo);border-radius:8px;
+  padding:32px 30px;box-shadow:0 10px 30px rgba(0,0,0,.06);max-width:860px;margin:0 auto;
+}
+.cta .k{font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--rojo);text-transform:uppercase;margin-bottom:8px}
+.cta h3{font-size:24px;font-weight:800;color:var(--gris);margin-bottom:6px}
+.cta .url{font-size:17px;font-weight:600;color:var(--gris-med);word-break:break-all}
+.cta a.go{
+  display:inline-flex;align-items:center;gap:12px;background:var(--rojo);color:#fff;text-decoration:none;
+  font-weight:700;font-size:17px;padding:16px 28px;border-radius:6px;white-space:nowrap;transition:background .15s ease;
+}
+.cta a.go:hover{background:var(--rojo-hondo)}
+.cta .alt{font-size:15px;color:var(--gris-med);line-height:1.5}
+.cta .alt a{color:var(--rojo);font-weight:700}
+.cta a.go:focus-visible{outline:3px solid var(--gris);outline-offset:3px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:22px}
+.card{
+  display:block;text-align:center;background:#fff;border:1px solid #E3E3E6;border-top:5px solid var(--rojo);
+  border-radius:8px;padding:24px 26px;text-decoration:none;color:inherit;
+}
+a.card{transition:transform .16s ease, box-shadow .16s ease}
+a.card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(0,0,0,.12)}
+a.card:focus-visible{outline:3px solid var(--rojo);outline-offset:3px}
+.card .k{font-size:13px;font-weight:700;color:var(--rojo);margin-bottom:9px;letter-spacing:.06em}
+.card h3{font-size:19px;font-weight:700;color:var(--gris);margin-bottom:8px;line-height:1.3}
+.card p,.card li{font-size:15px;line-height:1.55;color:var(--gris-med)}
+.card ul{list-style:none;padding:0}
+.card li{margin-bottom:6px}
+.card li:last-child{margin-bottom:0}
+.steps-ol{counter-reset:s;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px 32px}
+.steps-ol li{counter-increment:s;position:relative;padding:18px 10px;border-bottom:1px solid #E3E3E6;font-size:15.5px;line-height:1.5;color:var(--gris-med);text-align:center}
+.steps-ol li::before{content:counter(s);margin:0 auto 10px;width:36px;height:36px;background:var(--rojo);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+.steps-ol li b{color:var(--gris)}
+.aviso{
+  margin:30px auto 0;padding:22px 26px;background:var(--rosa);max-width:960px;text-align:center;
+  border-top:6px solid var(--rojo);font-size:16px;line-height:1.55;color:var(--gris);
+}
+.aviso b{font-weight:700}
+.sitefoot{margin-top:0;background:var(--gris);color:#d9d9dd;font-size:14px;line-height:1.6}
+.sitefoot .stripe{height:6px;background:linear-gradient(90deg,var(--rojo) 0 70%,var(--gris-med) 70% 100%)}
+.sitefoot .wrap{display:flex;justify-content:center;gap:28px 64px;flex-wrap:wrap;padding-top:30px;padding-bottom:30px;text-align:center}
+.sitefoot h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:6px}
+.sitefoot a{color:#fff}
+.sitefoot .legal{border-top:1px solid rgba(255,255,255,.12);padding:14px 0;font-size:12.5px;color:#b7b7bd;text-align:center}
+.sitefoot .legal .wrap{padding-top:0;padding-bottom:0}
+@media(max-width:760px){
+  #bar{justify-content:center}
+  #prog{width:100%;order:9;flex:none}
+  .hero h1{font-size:30px}
+  .hero .k{letter-spacing:.08em;font-size:12px}
+}
+/* ---------- cortina de entrada ---------- */
+#intro{
+  position:fixed;inset:0;z-index:1000;background:#fff;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;
+  animation:introFallback .5s ease 9s forwards;
+}
+#intro::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:var(--rojo)}
+#intro .i-rail{position:absolute;left:0;top:0;width:12px;height:100%;background:var(--rojo)}
+#intro .i-lg{position:absolute;left:0;top:0;width:78%;height:22vh;background:var(--gris-claro);clip-path:polygon(0 0,100% 0,100% 40%,0 100%)}
+#intro .i-red{position:absolute;right:0;top:0;width:min(36vw,380px);height:min(28vw,300px);background:var(--rojo);clip-path:polygon(30% 0,100% 0,100% 100%)}
+#intro .i-gray{position:absolute;left:0;bottom:10px;width:100%;height:86px;background:var(--gris-med);clip-path:polygon(0 100%,100% 18%,100% 100%)}
+#intro .i-box{position:relative;padding:0 24px;max-width:900px}
+#intro .i-logo{display:block;width:min(560px,82vw);height:auto;margin:0 auto 30px;opacity:0}
+#intro .i-line{display:block;width:120px;height:5px;background:var(--rojo);margin:0 auto 26px;transform:scaleX(0)}
+#intro .i-dept{font-size:clamp(20px,3.2vw,30px);font-weight:800;color:var(--gris);line-height:1.25;letter-spacing:.01em;opacity:0}
+#intro .i-name{margin-top:14px;font-size:clamp(17px,2.4vw,23px);font-weight:700;color:var(--rojo);letter-spacing:.02em;opacity:0}
+#intro.go .i-logo{animation:iPop .8s cubic-bezier(.2,.9,.3,1) .05s both}
+#intro.go .i-line{animation:iLine .6s cubic-bezier(.4,0,.2,1) .45s both}
+#intro.go .i-dept{animation:iRise .7s cubic-bezier(.2,.8,.25,1) .6s both}
+#intro.go .i-name{animation:iRise .7s cubic-bezier(.2,.8,.25,1) .85s both}
+#intro.out{animation:curtain .85s cubic-bezier(.77,0,.18,1) forwards;pointer-events:none}
+@keyframes iPop{from{opacity:0;transform:scale(.92) translateY(14px)}to{opacity:1;transform:none}}
+@keyframes iLine{to{transform:scaleX(1)}}
+@keyframes iRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes curtain{to{transform:translateY(-100%);visibility:hidden}}
+@keyframes introFallback{to{opacity:0;visibility:hidden;pointer-events:none}}
+body.intro-on{overflow:hidden}
+
+@media (prefers-reduced-motion:reduce){
+  #intro.out{animation:introFallback .3s ease forwards}
+}
+@media (prefers-reduced-motion:reduce){
+  .scene.active .kb{animation:none}
+  #wipe.go{animation-duration:.01s}
+}
+</style>
+</head>
+<body class="intro-on">
+
+<div id="intro" aria-hidden="true">
+  <span class="i-lg"></span><span class="i-red"></span><span class="i-gray"></span><span class="i-rail"></span>
+  <div class="i-box">
+    <img class="i-logo" data-img="lockup" alt="">
+    <span class="i-line"></span>
+    <p class="i-dept">Coordinación de<br>Exámenes Estandarizados</p>
+    <p class="i-name">Mtra. Paulina Fernández Izaguirre</p>
+  </div>
+</div>
+
+
+<header class="sitehead">
+  <div class="wrap">
+    <img data-img="lockup" alt="Universidad Autónoma de Tamaulipas · Facultad de Ingeniería Tampico">
+    <p class="t">Registro en línea al EXANI-II<span>Coordinación de Exámenes Estandarizados</span></p>
+  </div>
+</header>
+
+<main class="page">
+<section class="hero">
+  <p class="k">Video tutorial · Guía paso a paso</p>
+  <h1>OBTÉN TU PASE DE EXAMEN</h1>
+  <p>Sigue el video paso a paso. Al final de esta página está el enlace oficial al registro en línea de CENEVAL y el contacto para dudas.</p>
+</section>
+
+<div id="player">
+<div id="viewport">
+  <div id="stage" class="paused">
+
+    <div class="geo geo-slim">
+      <span class="bred"></span><span class="bgray"></span>
+      <span class="rail"></span><span class="rail-notch"></span>
+    </div>
+    <div class="geo geo-cover">
+      <span class="lg"></span><span class="band"></span><span class="red"></span>
+      <span class="bred"></span><span class="bgray"></span>
+      <span class="rail"></span><span class="rail-notch"></span>
+    </div>
+
+    <header id="hdr">
+      <img class="l-uat" data-img="uat" alt="Universidad Autónoma de Tamaulipas">
+      <p class="mid">Registro en línea · <b>EXANI-II</b></p>
+      <img class="l-fit" data-img="fit" alt="Facultad de Ingeniería Tampico">
+    </header>
+
+    <!-- 0 · Portada -->
+    <section class="scene cover" data-dur="11">
+      <div class="cov">
+        <img class="lockup a-pop" data-img="lockup" alt="UAT · Facultad de Ingeniería Tampico">
+        <p class="kicker a-rise" style="--d:.4s">Guía paso a paso · <b>CENEVAL</b></p>
+        <div class="title-band a-wipe" style="--d:.6s"><h1>Registro en línea<small>EXANI-II</small></h1></div>
+        <p class="sub a-rise" style="--d:1.2s">Cómo obtener tu pase de ingreso al examen</p>
+        <p class="sub strong a-rise" style="--d:1.35s">Facultad de Ingeniería Tampico</p>
+        <p class="dept a-rise" style="--d:1.6s">Coordinación de Exámenes Estandarizados</p>
+      </div>
+    </section>
+
+    <!-- 1 · Paso 1 -->
+    <section class="scene" data-dur="27">
+      <div class="pane">
+        <div class="step a-wipe"><span class="tag">PASO 1</span><h2>Ingresa tus datos de registro</h2><span class="of">1 / 9</span></div>
+        <div class="cols shot">
+          <ul class="list">
+            <li class="a-rise" style="--d:.5s"><b>Institución:</b> UAT Presencial o UAT EDC, según sea tu caso</li>
+            <li class="a-rise" style="--d:.75s"><b>Matrícula:</b> escríbela. Si deseas consultarla, entra al <b>Portal de Aspirantes UAT</b> con tu cuenta</li>
+            <li class="a-rise" style="--d:1s"><b>Programa/Carrera:</b> elige tu carrera correctamente</li>
+            <li class="a-rise" style="--d:1.15s"><b>Campus:</b> <em>Facultad de Ingeniería</em></li>
+            <li class="a-rise" style="--d:1.3s">Acepta el <b>aviso de privacidad</b> y da clic en <em>Aceptar</em></li>
+          </ul>
+          <figure class="frame a-pop shotw" style="--d:.6s">
+            <img data-img="s1" alt="Pantalla de bienvenida al registro en línea: institución, matrícula, carrera y campus">
+            <span class="hl-move"></span>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · Paso 2 -->
+    <section class="scene" data-dur="9">
+      <div class="pane">
+        <div class="step a-wipe"><span class="tag">PASO 2</span><h2>Continúa con tu registro</h2><span class="of">2 / 9</span></div>
+        <div class="cols shot">
+          <ul class="list">
+            <li class="a-rise" style="--d:.5s">En la pantalla de <b>Instrucciones</b>, verifica que tu estado diga <b>Activo</b></li>
+            <li class="a-rise" style="--d:.8s">Da clic en <em>“Para continuar con el registro hacer clic aquí”</em></li>
+          </ul>
+          <figure class="frame a-pop shotw" style="--d:.6s">
+            <img data-img="s2" class="kb" style="--kbz:2.3;--kbx:28%;--kby:41%;--kbt:6s;--kbd:1.2s" alt="Pantalla de instrucciones del registro">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · Paso 3 -->
+    <section class="scene" data-dur="19">
+      <div class="pane">
+        <div class="step a-wipe"><span class="tag">PASO 3</span><h2>Llena tus datos personales</h2><span class="of">3 / 9</span></div>
+        <div class="cols shot">
+          <ul class="list">
+            <li class="a-rise" style="--d:.5s">Nombre y apellidos <b>como aparecen en tu acta o CURP</b></li>
+            <li class="a-rise" style="--d:.75s">Si eres mexicano, <em>desmarca “No soy mexicano(a)”</em> y escribe tu <b>CURP</b></li>
+            <li class="a-rise" style="--d:1s">Domicilio y teléfonos completos</li>
+            <li class="a-rise" style="--d:1.25s">Tu correo <b>en los dos espacios</b> y da clic en <em>Siguiente</em></li>
+          </ul>
+          <figure class="frame a-pop shotw" style="--d:.6s">
+            <img data-img="s3" class="kb" style="--kbz:2.3;--kbx:0%;--kby:71%;--kbt:9s;--kbd:4s" alt="Formulario de datos personales">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · Paso 4 -->
+    <section class="scene" data-dur="13">
+      <div class="pane">
+        <div class="step a-wipe"><span class="tag">PASO 4</span><h2>Verifica tus datos básicos</h2><span class="of">4 / 9</span></div>
+        <div class="cols shot">
+          <div>
+            <ul class="list">
+              <li class="a-rise" style="--d:.5s">Revisa con cuidado el recuadro de <b>Verificación de datos básicos</b></li>
+              <li class="a-rise" style="--d:.8s">Si todo es correcto, da clic en <em>Aceptar</em></li>
+            </ul>
+            <div class="warn a-rise" style="--d:4.2s;margin-top:40px">
+              <span class="ic">!</span>
+              <p>Si tus datos no son correctos, no tendrás derecho a presentar el examen ni a obtener tu resultado.</p>
+            </div>
+          </div>
+          <figure class="frame a-pop shotw" style="--d:.6s">
+            <img data-img="s4" class="kb" style="--kbz:1.7;--kbx:50%;--kby:17%;--kbt:6s;--kbd:1.2s" alt="Recuadro de verificación de datos básicos">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · Paso 5 -->
+    <section class="scene" data-dur="16">
+      <div class="pane">
+        <div class="step a-wipe"><span class="tag">PASO 5</span><h2>Confirma tu correo electrónico</h2><span class="of">5 / 9</span></div>
+        <div class="cols shot">
+          <div>
+            <ul class="list">
+              <li class="a-rise" style="--d:.5s">Abre el correo de <b>CENEVAL – Registro en línea</b></li>
+              <li class="a-rise" style="--d:.8s">Da clic en <em>“aquí”</em> para confirmar</li>
+              <li class="a-rise" style="--d:1.1s">Verás el mensaje <b>“Correo confirmado con éxito”</b></li>
+            </ul>
+            <div class="warn a-rise" style="--d:9s;margin-top:36px">
+              <span class="ic">!</span>
+              <p>Después, <b style="color:var(--rojo)">regresa a la página de CENEVAL</b> para continuar con las encuestas.</p>
+            </div>
+          </div>
+          <div class="stack">
+            <figure class="frame a-pop" style="--d:.6s;left:0;top:10px;width:1000px">
+              <img data-img="s5a" alt="Correo de confirmación de CENEVAL">
+            </figure>
+            <figure class="frame a-pop" style="--d:6.2s;right:0;bottom:0;width:560px;border:3px solid var(--rojo)">
+              <img data-img="s5b" alt="Correo confirmado con éxito">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · Paso 6 -->
+    <section class="scene" data-dur="16">
+      <div class="pane">
+        <div class="step a-wipe"><span class="tag">PASO 6</span><h2>Contesta las 7 secciones del registro</h2><span class="of">6 / 9</span></div>
+        <div class="cols shot">
+          <ul class="list">
+            <li class="a-rise" style="--d:.5s">Da clic en <em>“llenar”</em> en cada sección</li>
+            <li class="a-rise" style="--d:.8s">Contesta <b>todas</b> las preguntas con veracidad</li>
+            <li class="a-rise" style="--d:1.1s">Tus respuestas <b>no influyen</b> en tu calificación ni en tu admisión</li>
+          </ul>
+          <div class="stack">
+            <figure class="frame a-pop" style="--d:.6s;left:0;top:0;width:900px">
+              <img data-img="s6a" alt="Menú de secciones del registro, incompletas">
+            </figure>
+            <figure class="frame a-pop" style="--d:7s;right:0;bottom:0;width:780px">
+              <img data-img="s6b" alt="Sección 1, datos generales">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · Paso 7 -->
+    <section class="scene" data-dur="9">
+      <div class="pane">
+        <div class="step a-wipe"><span class="tag">PASO 7</span><h2>Todas completas: da clic en Continuar</h2><span class="of">7 / 9</span></div>
+        <div class="cols shot">
+          <ul class="list">
+            <li class="a-rise" style="--d:.5s">Las 7 secciones deben decir <b>“completa”</b></li>
+            <li class="a-rise" style="--d:.8s">Si necesitas corregir algo, usa <b>“editar”</b></li>
+            <li class="a-rise" style="--d:1.1s">Da clic en <em>Continuar</em></li>
+          </ul>
+          <figure class="frame a-pop shotw" style="--d:.6s">
+            <img data-img="s7" alt="Menú de secciones con las 7 secciones completas">
+            <span class="hl-box" style="--d:3.2s;left:488px;top:473px;width:84px;height:46px"></span>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · Paso 8 -->
+    <section class="scene" data-dur="17">
+      <div class="pane">
+        <div class="step a-wipe"><span class="tag">PASO 8</span><h2>Se genera tu pase de ingreso al examen</h2><span class="of">8 / 9</span></div>
+        <div class="cols shot">
+          <div>
+            <p class="a-rise" style="--d:.5s;font-size:22px;font-weight:700;letter-spacing:.08em;color:var(--gris-med);text-transform:uppercase;margin-bottom:24px">El día del examen necesitas</p>
+            <ul class="list">
+              <li class="a-rise" style="--d:.7s"><b>Identificación con fotografía</b> (INE o pasaporte)</li>
+              <li class="a-rise" style="--d:.95s">Lápiz del núm. <b>2 o 2½</b></li>
+              <li class="a-rise" style="--d:1.2s"><b>Goma</b> y <b>sacapuntas</b></li>
+            </ul>
+            <p class="a-rise" style="--d:1.6s;margin-top:34px;font-size:22px;line-height:1.5;color:var(--gris-med);font-weight:500">Tu pase indica tu <b style="color:var(--gris)">folio</b> (único e intransferible), la <b style="color:var(--gris)">fecha</b> y el <b style="color:var(--gris)">horario</b> de tu examen.</p>
+          </div>
+          <figure class="frame a-pop shotw" style="--d:.6s">
+            <img data-img="s8" class="kb" style="--kbz:1.45;--kbx:0%;--kby:42%;--kbt:10s;--kbd:1.5s" alt="Pase de ingreso al examen">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 · Paso 9 -->
+    <section class="scene" data-dur="16">
+      <div class="pane">
+        <div class="step a-wipe"><span class="tag">PASO 9</span><h2>Guarda tu pase en PDF</h2><span class="of">9 / 9</span></div>
+        <div class="cols shot">
+          <div>
+            <ul class="list num">
+              <li class="a-rise" style="--d:.5s">Clic en <b>“Impresión de este talón de registro”</b></li>
+              <li class="a-rise" style="--d:.8s">En <b>Destino</b>, elige <em>Guardar como PDF</em></li>
+              <li class="a-rise" style="--d:1.1s">Clic en <b>Guardar</b> y elige dónde guardarlo</li>
+            </ul>
+            <div class="warn a-rise" style="--d:10.5s;margin-top:40px">
+              <span class="ic">!</span>
+              <p>Guárdalo muy bien y no lo extravíes: es tu pase de ingreso al examen.</p>
+            </div>
+          </div>
+          <figure class="frame a-pop shotw" style="--d:.6s">
+            <img data-img="s9" alt="Diálogo de impresión con destino Guardar como PDF">
+            <span class="hl-box" style="--d:4.5s;left:716px;top:69px;width:150px;height:44px"></span>
+            <span class="hl-box" style="--d:8s;left:729px;top:443px;width:76px;height:44px"></span>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 · Cierre -->
+    <section class="scene cover" data-dur="13">
+      <div class="cov">
+        <img class="lockup a-pop" data-img="lockup" alt="UAT · Facultad de Ingeniería Tampico">
+        <div class="title-band a-wipe" style="--d:.5s"><h1 class="cierre">¡Listo! Ya tienes tu pase<br>de ingreso al EXANI-II</h1></div>
+        <p class="sub strong a-rise" style="--d:1.1s">Coordinación de Exámenes Estandarizados</p>
+        <p class="sub a-rise" style="--d:1.25s">Facultad de Ingeniería Tampico · UAT</p>
+        <div class="contact a-rise" style="--d:1.6s">
+          <span class="ic"></span>
+          <div><p>Dudas y aclaraciones</p><h3>Mtra. Paulina Fernández Izaguirre · <span>pizaguirre@uat.edu.mx</span></h3></div>
+        </div>
+      </div>
+    </section>
+
+    <div id="cc"></div>
+    <div id="wipe"></div>
+
+    <footer id="ftr">Coordinación de Exámenes Estandarizados · Facultad de Ingeniería Tampico · UAT</footer>
+  </div>
+</div>
+
+<div id="bar">
+  <button id="bPlay" title="Espacio">Pausa</button>
+  <button id="bPrev" title="Flecha izquierda">Anterior</button>
+  <button id="bNext" title="Flecha derecha">Siguiente</button>
+  <button id="bRe" title="R">Reiniciar</button>
+  <span class="sep"></span>
+  <div id="prog" role="progressbar" aria-label="Progreso del video"><div id="progf"></div></div>
+  <span id="time">0:00 / 0:00</span>
+  <span class="sep"></span>
+  <button id="bCC" class="on" title="C">Subtítulos</button>
+  <button id="bVoz" title="V">Voz</button>
+  <button id="bFs" title="F">Pantalla completa</button>
+</div>
+</div>
+
+<section class="sec" id="registro">
+  <h2>Enlace oficial de registro</h2>
+  <p class="sub">Aquí inicias el Paso 1. Ten a la mano tu matrícula, tu CURP y un correo al que tengas acceso.</p>
+  <div class="cta">
+    <div>
+      <p class="k">CENEVAL · Registro en línea EXANI-II</p>
+      <h3>Registro en línea al EXANI-II</h3>
+      <p class="url">__REG_URL_TEXT__</p>
+    </div>
+    <a class="go" href="__REG_URL__" target="_blank" rel="noopener">Ir al registro en línea →</a>
+    <p class="alt">¿No recuerdas tu matrícula? <a href="https://aspirantes.uat.edu.mx/" target="_blank" rel="noopener">Consúltala en el Portal de Aspirantes UAT</a></p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <p class="k">ANTES DE EMPEZAR</p>
+      <h3>Qué necesitas</h3>
+      <ul>
+        <li>Tu matrícula (puedes consultarla en el Portal de Aspirantes UAT con tu cuenta)</li>
+        <li>Tu CURP y tu acta de nacimiento a la mano</li>
+        <li>Un correo electrónico al que tengas acceso</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="k">EL DÍA DEL EXAMEN</p>
+      <h3>Qué debes presentar</h3>
+      <ul>
+        <li>Identificación con fotografía (INE o pasaporte)</li>
+        <li>Lápiz del núm. 2 o 2½</li>
+        <li>Goma y sacapuntas</li>
+      </ul>
+    </div>
+    <a class="card" href="mailto:pizaguirre@uat.edu.mx">
+      <p class="k">DUDAS Y ACLARACIONES</p>
+      <h3>Mtra. Paulina Fernández Izaguirre</h3>
+      <p>Coordinación de Exámenes Estandarizados · Facultad de Ingeniería Tampico<br><b style="color:var(--rojo)">pizaguirre@uat.edu.mx</b></p>
+    </a>
+  </div>
+</section>
+
+<section class="sec">
+  <h2>Resumen de los 9 pasos</h2>
+  <p class="sub">Para consultarlos sin volver a ver el video.</p>
+  <ol class="steps-ol">
+    <li><b>Datos de registro.</b> Elige UAT Presencial o UAT EDC, escribe tu matrícula (consúltala en el Portal de Aspirantes UAT), elige tu carrera, en Campus elige Facultad de Ingeniería, acepta el aviso de privacidad y da clic en Aceptar.</li>
+    <li><b>Instrucciones.</b> Da clic en “Para continuar con el registro hacer clic aquí”.</li>
+    <li><b>Datos personales.</b> Como aparecen en tu acta o CURP; desmarca “No soy mexicano(a)” si eres mexicano; correo en ambos campos; Siguiente.</li>
+    <li><b>Verificación.</b> Revisa tus datos básicos y da clic en Aceptar.</li>
+    <li><b>Correo.</b> Abre el mensaje de CENEVAL y confirma dando clic en “aquí”. Después, regresa a la página de CENEVAL para seguir con las encuestas.</li>
+    <li><b>7 secciones.</b> Da clic en “llenar” en cada una y contesta todas las preguntas.</li>
+    <li><b>Continuar.</b> Con las 7 secciones en “completa”, da clic en Continuar.</li>
+    <li><b>Pase de ingreso.</b> Revisa tu folio, fecha y horario de examen.</li>
+    <li><b>Guárdalo en PDF.</b> Impresión de este talón → Destino: Guardar como PDF → Guardar.</li>
+  </ol>
+  <div class="aviso">
+    <b>Importante:</b> tus datos deben coincidir con tus documentos oficiales; si no son correctos, no tendrás derecho a presentar el examen. Guarda tu pase de ingreso en PDF y no lo extravíes.
+  </div>
+</section>
+
+</main>
+
+<footer class="sitefoot">
+  <div class="stripe"></div>
+  <div class="wrap">
+    <div><h4>Departamento</h4><p>Coordinación de Exámenes Estandarizados<br>Facultad de Ingeniería Tampico · Universidad Autónoma de Tamaulipas</p></div>
+    <div><h4>Dudas y aclaraciones</h4><p>Mtra. Paulina Fernández Izaguirre<br><a href="mailto:pizaguirre@uat.edu.mx">pizaguirre@uat.edu.mx</a></p></div>
+    <div><h4>Registro oficial</h4><p><a href="__REG_URL__" target="_blank" rel="noopener">registroenlinea.ceneval.edu.mx</a></p></div>
+  </div>
+  <div class="legal"><div class="wrap">Material de apoyo informativo. El registro y la aplicación del EXANI-II son responsabilidad de CENEVAL, A.C. Los datos personales de las capturas fueron difuminados.</div></div>
+</footer>
+
+<script>
+var IMG = __IMG__;
+
+document.querySelectorAll('[data-img]').forEach(function(el){
+  var k = el.getAttribute('data-img');
+  if(IMG[k]) el.src = IMG[k];
+});
+
+var stage   = document.getElementById('stage'),
+    scenes  = Array.prototype.slice.call(document.querySelectorAll('.scene')),
+    wipe    = document.getElementById('wipe'),
+    cc      = document.getElementById('cc'),
+    progf   = document.getElementById('progf'),
+    prog    = document.getElementById('prog'),
+    timeEl  = document.getElementById('time'),
+    bar     = document.getElementById('bar');
+
+var DUR = scenes.map(function(s){ return parseFloat(s.dataset.dur); });
+var TOTAL = DUR.reduce(function(a,b){return a+b;},0);
+var OFFSET = []; DUR.reduce(function(a,d,i){ OFFSET[i]=a; return a+d; },0);
+
+var NARR = [
+"Bienvenido a la guía paso a paso para registrarte en línea al EXANI-II de CENEVAL y obtener tu pase de ingreso al examen.",
+"Entra al registro en línea de CENEVAL. En Institución, selecciona Universidad Autónoma de Tamaulipas Presencial, o EDC, según sea tu caso. Escribe tu matrícula. Si deseas consultarla, entra al Portal de Aspirantes UAT con tu cuenta. Elige correctamente tu carrera y, en Campus, selecciona Facultad de Ingeniería. Después, acepta el aviso de privacidad y da clic en Aceptar.",
+"En la pantalla de instrucciones, da clic en: Para continuar con el registro, hacer clic aquí.",
+"Llena tus datos personales tal como aparecen en tu acta de nacimiento o CURP. Si eres mexicano, desmarca la casilla No soy mexicano y escribe tu CURP. Completa tu domicilio, tus teléfonos y tu correo en los dos espacios. Después, da clic en Siguiente.",
+"Aparecerá un recuadro de verificación. Revísalo con cuidado: si tus datos no son correctos, no tendrás derecho a presentar el examen. Si todo está bien, da clic en Aceptar.",
+"Abre tu correo. CENEVAL te enviará un mensaje de confirmación: da clic en aquí, y tu correo quedará confirmado. Después, regresa a la página del registro de CENEVAL para continuar con las encuestas.",
+"De regreso en la página de CENEVAL, verás el menú con siete secciones. Da clic en llenar en cada una y contesta todas las preguntas con veracidad. Tus respuestas no influyen en tu calificación ni en tu admisión.",
+"Cuando las siete secciones digan completa, da clic en el botón Continuar.",
+"Se generará tu pase de ingreso al examen, con tu folio, fecha y horario. El día del examen necesitarás una identificación con fotografía, lápiz del número dos o dos y medio, goma y sacapuntas.",
+"Para guardarlo, da clic en Impresión de este talón de registro. En destino elige Guardar como PDF, da clic en Guardar y elige dónde guardarlo. Guárdalo muy bien y no lo extravíes.",
+"Y listo. Ya tienes tu pase de ingreso al EXANI-II. Si tienes dudas, contacta a la Maestra Paulina Fernández Izaguirre. ¡Mucho éxito!"
+];
+
+// subtítulos por frases, repartidos según su longitud
+var CUES = NARR.map(function(txt, n){
+  var parts = txt.match(/[^.!?:]+[.!?:]+|[^.!?:]+$/g).map(function(s){return s.trim();}).filter(Boolean);
+  var out = [], buf = '';
+  parts.forEach(function(p){
+    if(buf && (buf + ' ' + p).length > 118){ out.push(buf); buf = p; }
+    else buf = buf ? buf + ' ' + p : p;
+  });
+  if(buf) out.push(buf);
+  var total = out.reduce(function(a,s){return a+s.length;},0), acc = 0, lead = 0.5, span = DUR[n] - 1.2;
+  out = out.map(function(s){ return s.charAt(0).toUpperCase() + s.slice(1); });
+  return out.map(function(s){ var st = lead + span*acc/total; acc += s.length; return {t:st, s:s}; });
+});
+function cueAt(n, time){
+  var c = CUES[n], s = c[0].s;
+  for(var k=0;k<c.length;k++){ if(time >= c[k].t) s = c[k].s; }
+  return s;
+}
+
+var i = -1, t = 0, playing = false, last = 0, voz = false;
+
+var vp = document.getElementById('viewport'), player = document.getElementById('player');
+function fit(){
+  var s, L = 0, T = 0;
+  if(document.fullscreenElement){
+    s = Math.min(window.innerWidth/1920, window.innerHeight/1080);
+    vp.style.height = window.innerHeight + 'px';
+    L = (window.innerWidth  - 1920*s)/2;
+    T = (window.innerHeight - 1080*s)/2;
+  } else {
+    s = vp.clientWidth/1920;
+    vp.style.height = (1080*s) + 'px';
+  }
+  stage.style.left = L + 'px'; stage.style.top = T + 'px';
+  stage.style.transform = 'scale(' + s + ')';
+}
+window.addEventListener('resize', fit);
+document.addEventListener('fullscreenchange', function(){ setTimeout(fit, 60); });
+fit();
+
+function fmt(s){ s=Math.max(0,Math.round(s)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+
+// narración: se lee frase por frase; al cambiar de escena hay una pausa antes de hablar,
+// y la escena no avanza hasta que la voz termina (más una pausa corta)
+var speechDone = true, speechEndAt = 0, speakTimer = null, pendingSpeak = -1, speechId = 0;
+var SPEECH_DELAY = 700, SPEECH_GAP = 0.9, SPEECH_MAX_WAIT = 15;
+function pickVoice(){
+  var all = speechSynthesis.getVoices();
+  var v = all.filter(function(x){ return /es(-|_)MX/i.test(x.lang); });
+  if(!v.length) v = all.filter(function(x){ return /es(-|_)(US|419)/i.test(x.lang); });
+  if(!v.length) v = all.filter(function(x){ return /^es/i.test(x.lang); });
+  return v.length ? v[0] : null;
+}
+function startSpeech(n){
+  pendingSpeak = -1;
+  var id = ++speechId, parts = CUES[n].map(function(c){ return c.s; }), voice = pickVoice();
+  speechDone = false;
+  parts.forEach(function(p, k){
+    var u = new SpeechSynthesisUtterance(p);
+    u.lang = 'es-MX'; u.rate = 1; u.pitch = 1;
+    if(voice) u.voice = voice;
+    if(k === parts.length - 1){
+      u.onend = u.onerror = function(){ if(id === speechId){ speechDone = true; speechEndAt = performance.now(); } };
+    }
+    speechSynthesis.speak(u);
+  });
+}
+function speak(n){
+  if(!('speechSynthesis' in window)) return;
+  clearTimeout(speakTimer); pendingSpeak = -1; speechId++;
+  speechSynthesis.cancel();
+  if(!voz){ speechDone = true; return; }
+  speechDone = false;
+  speakTimer = setTimeout(function(){
+    if(!playing){ pendingSpeak = n; return; }
+    startSpeech(n);
+  }, SPEECH_DELAY);
+}
+function waitingForVoice(){
+  if(!voz || !('speechSynthesis' in window)) return false;
+  if(t - DUR[i] > SPEECH_MAX_WAIT) return false;
+  if(!speechDone) return true;
+  return (performance.now() - speechEndAt)/1000 < SPEECH_GAP;
+}
+
+function go(n, keepTime){
+  if(n < 0) n = 0;
+  if(n > scenes.length-1){ n = scenes.length-1; pause(); }
+  var changed = (n !== i);
+  i = n;
+  if(!keepTime) t = 0;
+  scenes.forEach(function(s){ s.classList.remove('active'); });
+  var sc = scenes[i];
+  sc.style.setProperty('--dur', DUR[i] + 's');
+  void sc.offsetWidth;
+  sc.classList.add('active');
+  stage.classList.toggle('cover-mode', sc.classList.contains('cover'));
+  cc.textContent = cueAt(i, t);
+  if(changed){
+    wipe.classList.remove('go'); void wipe.offsetWidth; wipe.classList.add('go');
+  }
+  if(changed || !keepTime) speak(i);
+}
+
+function play(){
+  playing = true; stage.classList.remove('paused');
+  document.getElementById('bPlay').textContent = 'Pausa';
+  if(voz && 'speechSynthesis' in window){
+    if(pendingSpeak >= 0) startSpeech(pendingSpeak);
+    else if(speechSynthesis.paused) speechSynthesis.resume();
+  }
+  last = performance.now(); requestAnimationFrame(loop);
+}
+function pause(){
+  playing = false; stage.classList.add('paused');
+  document.getElementById('bPlay').textContent = 'Reproducir';
+  if('speechSynthesis' in window && speechSynthesis.speaking) speechSynthesis.pause();
+}
+function toggle(){ playing ? pause() : play(); }
+
+function loop(now){
+  if(!playing) return;
+  var dt = (now - last)/1000; last = now;
+  t += dt;
+  if(t >= DUR[i] && !waitingForVoice()){
+    if(i < scenes.length-1){ go(i+1); }
+    else { t = DUR[i]; pause(); }
+  }
+  var line = cueAt(i, t);
+  if(cc.textContent !== line) cc.textContent = line;
+  var done = OFFSET[i] + Math.min(t, DUR[i]);
+  progf.style.width = (done/TOTAL*100) + '%';
+  timeEl.textContent = fmt(done) + ' / ' + fmt(TOTAL);
+  requestAnimationFrame(loop);
+}
+
+document.getElementById('bPlay').onclick = toggle;
+document.getElementById('bNext').onclick = function(){ go(i+1); };
+document.getElementById('bPrev').onclick = function(){ t > 1.2 ? go(i) : go(i-1); };
+document.getElementById('bRe').onclick = function(){ go(0); play(); };
+document.getElementById('bCC').onclick = function(){
+  stage.classList.toggle('nocc'); this.classList.toggle('on', !stage.classList.contains('nocc'));
+};
+document.getElementById('bVoz').onclick = function(){
+  voz = !voz; this.classList.toggle('on', voz);
+  if(voz){ speak(i); } else if('speechSynthesis' in window){ speechSynthesis.cancel(); }
+};
+document.getElementById('bFs').onclick = function(){
+  if(document.fullscreenElement) document.exitFullscreen();
+  else player.requestFullscreen();
+};
+prog.onclick = function(e){
+  var r = prog.getBoundingClientRect(), p = (e.clientX - r.left)/r.width * TOTAL, n = 0;
+  for(var k=0;k<DUR.length;k++){ if(p >= OFFSET[k]) n = k; }
+  go(n);
+};
+
+document.addEventListener('keydown', function(e){
+  if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if(e.code === 'Space'){ e.preventDefault(); toggle(); }
+  else if(e.key === 'ArrowRight') go(i+1);
+  else if(e.key === 'ArrowLeft') go(i-1);
+  else if(e.key.toLowerCase() === 'r'){ go(0); play(); }
+  else if(e.key.toLowerCase() === 'f') document.getElementById('bFs').click();
+  else if(e.key.toLowerCase() === 'c') document.getElementById('bCC').click();
+  else if(e.key.toLowerCase() === 'v') document.getElementById('bVoz').click();
+});
+
+var hideT;
+function wake(){
+  bar.classList.remove('hide');
+  clearTimeout(hideT);
+  hideT = setTimeout(function(){ if(playing && document.fullscreenElement) bar.classList.add('hide'); }, 2800);
+}
+document.addEventListener('mousemove', wake);
+document.addEventListener('click', wake);
+wake();
+
+if('speechSynthesis' in window) speechSynthesis.getVoices();
+go(0); pause();
+
+// cortina de entrada: logos + departamento + contacto, luego arranca el video
+(function(){
+  var intro = document.getElementById('intro'), done = false;
+  function finish(){
+    if(done) return; done = true;
+    intro.classList.add('out');
+    document.body.classList.remove('intro-on');
+    setTimeout(function(){ go(0); play(); }, 550);
+    setTimeout(function(){ intro.style.display = 'none'; }, 1000);
+  }
+  if(!intro){ go(0); play(); return; }
+  requestAnimationFrame(function(){ intro.classList.add('go'); });
+  setTimeout(finish, 3000);
+  intro.addEventListener('click', finish);
+})();
+</script>
+</body>
+</html>
