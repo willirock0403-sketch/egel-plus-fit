@@ -216,14 +216,14 @@ body{
 /* resaltador que recorre los campos del paso 1 */
 .hl-move{position:absolute;left:512px;top:114px;width:474px;height:40px;border:5px solid var(--rojo);border-radius:7px;
   box-shadow:0 0 0 9999px rgba(20,20,22,.22);opacity:0;pointer-events:none}
-.scene.active .hl-move{animation:hlmove 16.0s ease-in-out 5.0s both}
+.scene.active .hl-move{animation:hlmove 28.0s ease-in-out 5.0s both}
 @keyframes hlmove{
   0%{opacity:0;top:114px;left:512px;width:474px;height:40px}
-  2.5%,19.3%{opacity:1;top:114px;left:512px;width:474px;height:40px}
-  21.3%,36.9%{opacity:1;top:156px;left:512px;width:474px;height:40px}
-  38.9%,47.1%{opacity:1;top:197px;left:512px;width:474px;height:40px}
-  49.1%,74.9%{opacity:1;top:239px;left:512px;width:474px;height:40px}
-  76.9%,100%{opacity:1;top:280px;left:642px;width:214px;height:42px}
+  2.5%,10.2%{opacity:1;top:114px;left:512px;width:474px;height:40px}
+  12.2%,20.2%{opacity:1;top:156px;left:512px;width:474px;height:40px}
+  22.2%,59.2%{opacity:1;top:197px;left:512px;width:474px;height:40px}
+  61.2%,86.7%{opacity:1;top:239px;left:512px;width:474px;height:40px}
+  88.7%,100%{opacity:1;top:280px;left:642px;width:214px;height:42px}
 }
 
 /* ---------- EGEL Plus: componentes ---------- */
@@ -383,6 +383,15 @@ body{
 .carrow .code{flex:none;min-width:64px;text-align:center;background:var(--gris);color:#fff;font-weight:800;letter-spacing:.06em;padding:8px 10px;border-radius:5px;font-size:16px}
 .carrow .name{font-size:17px;font-weight:700;color:var(--gris);letter-spacing:.01em;font-family:inherit}
 @media(max-width:600px){.carrow{padding:12px 14px}.carrow .name{font-size:14.5px}}
+
+/* opciones de carrera sobre la captura del Paso 6 */
+.carov{position:absolute;left:3%;right:3%;bottom:16px;z-index:3;background:#fff;border-top:8px solid var(--rojo);border-radius:8px;
+  box-shadow:0 18px 50px rgba(0,0,0,.40);padding:16px 24px 18px;opacity:0}
+.scene.active .carov{animation:pop .7s cubic-bezier(.2,.9,.3,1) var(--d,0s) both}
+.carov h5{font-size:21px;font-weight:700;color:var(--gris);margin-bottom:8px;letter-spacing:.01em}
+.carov h5 b{color:var(--rojo)}
+.carov .r{display:flex;align-items:center;gap:14px;font-size:21px;font-weight:800;color:var(--gris);padding:6px 0;border-top:1px solid #EEE;letter-spacing:.01em}
+.carov .code{flex:none;min-width:62px;text-align:center;background:var(--gris);color:#fff;font-size:18px;font-weight:800;letter-spacing:.06em;padding:5px 8px;border-radius:5px}
 
 /* pilas de capturas */
 .stack{position:relative;width:1040px;height:600px}
@@ -595,7 +604,7 @@ body.intro-on{overflow:hidden}
   </video>
   <button class="bigplay" id="bigplay" aria-label="Reproducir video"></button>
 </div>
-<p class="vmeta">Duración 4:07 · Con voz y subtítulos</p>
+<p class="vmeta">Duración 4:04 · Con voz y subtítulos</p>
 
 <section class="sec" id="enlaces">
   <h2>Enlaces para su registro</h2>
